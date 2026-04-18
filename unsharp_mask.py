@@ -4,7 +4,7 @@ import streamlit as st #giaodien
 
 uploaded_image = st.file_uploader("Upload ảnh",type = ["jpg","png","jpeg"]) #nut de nguoi dung up anh tu may tinh
 
-k = st.sidebar.slider("Độ nét ảnh", min_value = 1.0, max_value = 2.0, value = 1.0, step = 0.1)
+k = st.sidebar.slider("Độ nét ảnh", min_value = 0.0, max_value = 2.0, value = 1.0, step = 0.1)
 if uploaded_image is not None:
     #doc du lieu tho duoc up len -> phan loai thanh byte -> chuyen byte thanh mang
     file_bytes = np.asanyarray(bytearray(uploaded_image.read()), dtype = np.uint8)
@@ -30,7 +30,7 @@ if uploaded_image is not None:
         
             after_blur = cv2.filter2D(image, -1, gaussian)
 
-            output = 2*anh_goc.astype(np.float32) - k*after_blur.astype(np.float32)
+            output = anh_goc.astype(np.float32) + k*(anh_goc.astype(np.float32) - after_blur.astype(np.float32))
             output = np.clip(output, 0, 255).astype(np.uint8)
 
             with col2:

@@ -37,10 +37,10 @@ if uploaded_image is not None:
                 st.image(output_rgb, use_container_width=True)
 
         def mse(b1, b2):
-            return np.mean((anh_goc.astype(np.float32) - output.astype(np.float32))**2)
+            return np.mean((b1.astype(np.float32) - b2.astype(np.float32))**2)
 
         def psnr(a1, a2):
-            meo = mse(anh_goc, output)
+            meo = mse(a1, a2)
             if meo == 0:
                 return 100
             return 10 * np.log10((255**2)/meo)   
